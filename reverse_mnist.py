@@ -4,7 +4,7 @@ import tensorflow as tf
 from scipy import misc
 
 from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+#mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 def weight_variable(shape):
   initial = tf.truncated_normal(shape, stddev=0.1)
@@ -26,7 +26,7 @@ x = tf.placeholder(tf.float32, [None, 10], 'x')
 with tf.variable_scope('fc1'):
     W_fc1 = weight_variable([10, 1024])
     b_fc1 = bias_variable([1024])
-    x_fc1 = tf.matmul(x, W_fc1) + b_fc1
+    x_fc1 = tf.nn.relu(tf.matmul(x, W_fc1) + b_fc1)
 
 with tf.variable_scope('fc2'):
     W_fc2 = weight_variable([1024, 7 * 7 * 64])
@@ -54,6 +54,13 @@ y = tf.reshape(h_conv2, [-1, 784])
 # Cost function
 y_ = tf.placeholder(tf.float32, [None, 784], name='y_')
 cost = tf.losses.mean_squared_error(y_, y)
+
+# Optional: Enforce sparse activations (note: not normalized
+#           for batch size)
+# Comment out:
+#cost2 = tf.reduce_mean(x_fc2)
+#cost = cost + cost2
+
 learning_rate = tf.placeholder(tf.float32, [], name='learning_rate')
 train_step = tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
@@ -72,7 +79,7 @@ for i in range(20000):
     print ('batch %s cost: %s' % (i, batch_cost))
 
 def gen_image(one_hot):
-    '''Inference: create single image from one-hot vector'''
+#    '''Inference: create single image from one-hot vector'''
     y_img = sess.run([y], feed_dict={x: [one_hot], batch_size:1})
     return y_img[0].reshape((28, 28))
 
