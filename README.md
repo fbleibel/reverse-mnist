@@ -17,3 +17,8 @@ Here's an animation created by blending digits from 0 to 9 using
 this network:
 
 ![blending digits animation](blend-animation.gif)
+
+Optionally, we can enforce sparse activations on one of the fully connected
+layers to minimize the features being blended:
+
+![sparse activations animation](sparse-animation.gif)
