@@ -6,6 +6,7 @@ image:
 
 `[0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0]`
 to
+
 ![digit 4](digit-4.gif)
 
 The network is trained on the reverse mnist dataset (labels to images)
@@ -14,4 +15,5 @@ the corresponding training images.
 
 Here's an animation created by blending digits from 0 to 9 using
 this network:
+
 ![blending digits animation](blend-animation.gif)
